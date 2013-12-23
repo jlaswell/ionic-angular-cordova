@@ -4,6 +4,15 @@ angular.module('starter.controllers', [])
   // Main app controller, empty for the example
 })
 
+.controller('ProjectTabCtrl', function($scope, Projects) {
+  $scope.projects = Projects.all();
+})
+
+.controller('ProjectCtrl', function($scope, $routeParams, Projects) {
+  $scope.project = Projects.get($routeParams.id);
+  $scope.tasks = Projects.getTasks($routeParams.id);
+})
+
 // A simple controller that fetches a list of data
 .controller('PetsTabCtrl', function($scope, Pets) {
   // "Pets" is a service returning mock data (services.js)

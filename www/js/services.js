@@ -1,5 +1,34 @@
 angular.module('starter.services', [])
 
+.factory('Projects', function() {
+  var projects = [
+    {
+      id: 0,
+      title: 'Build a Deck',
+      description: 'We\'re building that deck we always said we wanted!',
+      due_date: 'March 13th',
+      tasks: [
+        { id: 0, name: 'Research lumber types' },
+        { id: 1, name: 'Stake out the yard' }
+      ]
+  },
+    { id: 1, title: 'Repaint the house', due_date: 'June 5th' },
+    { id: 2, title: 'Plan vacation!', due_date: 'March 25th' }
+  ];
+
+  return {
+    all: function () {
+      return projects;
+    },
+    get: function (id) {
+      return projects[id];
+    },
+    getTasks: function (id) {
+      return projects[id].tasks;
+    }
+  }
+})
+
 /**
  * A simple example service that returns some data.
  */

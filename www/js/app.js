@@ -15,9 +15,19 @@ angular.module('starter', ['ionic', 'ngRoute', 'ngAnimate', 'starter.services', 
   // Set up the initial routes that our app will respond to.
   // These are then tied up to our nav router which animates and
   // updates a navigation bar
-  $routeProvider.when('/home', {
+  $routeProvider.when('/', {
     templateUrl: 'templates/app.html',
     controller: 'AppCtrl'
+  });
+
+  $routeProvider.when('/project', {
+    templateUrl: 'templates/projects.html',
+    controller: 'ProjectTabCtrl'
+  });
+
+  $routeProvider.when('/project/:id', {
+    templateUrl: 'templates/project.html',
+    controller: 'ProjectCtrl'
   });
 
   // if the url matches something like /pet/2 then this route
@@ -30,7 +40,7 @@ angular.module('starter', ['ionic', 'ngRoute', 'ngAnimate', 'starter.services', 
   // if none of the above routes are met, use this fallback
   // which executes the 'AppCtrl' controller (controllers.js)
   $routeProvider.otherwise({
-    redirectTo: '/home'
+    redirectTo: '/project'
   });
 
 });
