@@ -6,11 +6,7 @@
 -->
 <nav-page title="project.title">
   <content has-header="true" padding="true">
-  	{{ project.description }}
-    {{ project.due_date }}
-    <h4>Tasks</h4>
-  	<div ng-repeat="task in tasks">
-			<p>{{task.id + 1}}: {{task.name}}</p>
-  	</div>
+		<h3>{{project.title}}<br><small>{{project.due_date}}</small></h3>
+		<p>{{project.description}}</p>
   </content>
 </nav-page>

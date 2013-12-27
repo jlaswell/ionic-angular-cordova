@@ -1,9 +1,22 @@
 angular.module('starter.services', [])
 
-.factory('Projects', function() {
+.factory('Projects', ['$resource', function($resource) {
+  var urlBase = 'todo.daytoday.io'
+  var RESTfulProjects = $resource('http://' + urlBase + '/v1/project',
+    {},
+    {
+      all: {method:'GET', isArray:true}
+    });
+  var RESTfulProject = $resource('http://' + urlBase + '/v1/project/:id',
+    {id:'@id'},
+    {
+      get: {method:'GET', isArray:true}
+    });
+  // var RESTfulProject = $resource('http://localhost:8000/v1/project');
+  // var RESTfulProject = $resource('http://localhost:8000/projects');
   var projects = [
     {
-      id: 0,
+      id: 1,
       title: 'Build a Deck',
       description: 'We\'re building that deck we always said we wanted!',
       due_date: 'March 13th',
@@ -12,8 +25,16 @@ angular.module('starter.services', [])
         { id: 1, name: 'Stake out the yard' }
       ]
   },
-    { id: 1, title: 'Repaint the house', due_date: 'June 5th' },
-    { id: 2, title: 'Plan vacation!', due_date: 'March 25th' }
+    { id: 2, title: 'Repaint the house', due_date: 'June 5th', 
+      tasks: [
+        { id: 0, name: 'Research lumber types' },
+        { id: 1, name: 'Stake out the yard' }
+      ]},
+    { id: 3, title: 'Plan vacation!', due_date: 'March 25th',
+      tasks: [
+        { id: 0, name: 'Research lumber types' },
+        { id: 1, name: 'Stake out the yard' }
+      ]}
   ];
 
   return {
@@ -25,9 +46,13 @@ angular.module('starter.services', [])
     },
     getTasks: function (id) {
       return projects[id].tasks;
+    },
+    api: {
+      all: RESTfulProjects.all,
+      get: RESTfulProject.get
     }
   }
-})
+}])
 
 /**
  * A simple example service that returns some data.
