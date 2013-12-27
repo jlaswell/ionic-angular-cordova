@@ -7,7 +7,8 @@
   <tabs tabs-style="tabs-icon-top" tabs-type="tabs-positive" animate-nav="false">
 
     <tab title="Projects" icon="icon ion-clipboard" ng-controller="ProjectTabCtrl">
-      <content has-header="true" has-tabs="true">
+      <content has-header="true" has-tabs="true" on-refresh="refresh()">
+        <refresher></refresher>
         <list>
           <item ng-repeat="project in projects"  href="#/project/{{project.id}}">
               <h3>{{project.title}}</h3>

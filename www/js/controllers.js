@@ -10,6 +10,15 @@ angular.module('starter.controllers', [])
   $scope.projects.$promise.then(function (result) {
     $scope.projects = result;
   });
+
+  $scope.refresh = function () {
+    $scope.projects = Projects.api.all();
+    $scope.projects.$promise.then(function (result) {
+      $scope.projects = result;
+      // Trigger refresh complete on the pull to refresh action
+      $scope.$broadcast('scroll.refreshComplete');
+    });
+  }
   // Projects.api.query(function (response) {
     // $scope.api = response;
   // });
