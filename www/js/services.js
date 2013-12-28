@@ -1,8 +1,8 @@
 angular.module('starter.services', [])
 
 .factory('Projects', ['$resource', function($resource) {
-  // var urlBase = 'todo.daytoday.io';
-  var urlBase = 'localhost:8000';
+  var urlBase = 'todo.daytoday.io';
+  // var urlBase = 'localhost:8000';
   var RESTfulProjects = $resource('http://' + urlBase + '/v1/project', {},
     {query: {
       method: 'GET',
