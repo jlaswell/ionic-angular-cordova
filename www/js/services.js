@@ -1,56 +1,28 @@
 angular.module('starter.services', [])
 
 .factory('Projects', ['$resource', function($resource) {
-  var urlBase = 'todo.daytoday.io'
-  var RESTfulProjects = $resource('http://' + urlBase + '/v1/project',
-    {},
-    {
-      all: {method:'GET', isArray:true}
-    });
-  var RESTfulProject = $resource('http://' + urlBase + '/v1/project/:id',
-    {id:'@id'},
-    {
-      get: {method:'GET', isArray:true}
-    });
-  // var RESTfulProject = $resource('http://localhost:8000/v1/project');
-  // var RESTfulProject = $resource('http://localhost:8000/projects');
-  var projects = [
-    {
-      id: 1,
-      title: 'Build a Deck',
-      description: 'We\'re building that deck we always said we wanted!',
-      due_date: 'March 13th',
-      tasks: [
-        { id: 0, name: 'Research lumber types' },
-        { id: 1, name: 'Stake out the yard' }
-      ]
-  },
-    { id: 2, title: 'Repaint the house', due_date: 'June 5th', 
-      tasks: [
-        { id: 0, name: 'Research lumber types' },
-        { id: 1, name: 'Stake out the yard' }
-      ]},
-    { id: 3, title: 'Plan vacation!', due_date: 'March 25th',
-      tasks: [
-        { id: 0, name: 'Research lumber types' },
-        { id: 1, name: 'Stake out the yard' }
-      ]}
-  ];
+  // var urlBase = 'todo.daytoday.io';
+  var urlBase = 'localhost:8000';
+  var RESTfulProjects = $resource('http://' + urlBase + '/v1/project', {},
+    {query: {
+      method: 'GET',
+      isArray: true,
+      headers: {'Authorization': 'Basic ' + btoa('rfKkBTS5imPjKbd4:x')}
+    }
+  });
+  var RESTfulProject = $resource('http://' + urlBase + '/v1/project/:id', {id:'@id'},
+    { get:
+      {
+        method: 'GET',
+        isArray: false,
+        headers: {'Authorization': 'Basic ' + btoa('rfKkBTS5imPjKbd4:x')}
+      }
+    }
+    );
 
   return {
-    all: function () {
-      return projects;
-    },
-    get: function (id) {
-      return projects[id];
-    },
-    getTasks: function (id) {
-      return projects[id].tasks;
-    },
-    api: {
-      all: RESTfulProjects.all,
-      get: RESTfulProject.get
-    }
+    all: RESTfulProjects.query,
+    get: RESTfulProject.get
   }
 }])
 

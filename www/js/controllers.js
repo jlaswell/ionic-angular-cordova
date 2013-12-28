@@ -5,19 +5,30 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ProjectTabCtrl', function ($scope, Projects) {
-  // $scope.projects = Projects.all();
-  $scope.projects = Projects.api.all();
-  $scope.projects.$promise.then(function (result) {
-    $scope.projects = result;
-  });
-
-  $scope.refresh = function () {
-    $scope.projects = Projects.api.all();
+  var getAllProjects = function (extraCallback) {
+    // Grab all the projects.
+    $scope.projects = Projects.all();
+    // Set them once we get them.
     $scope.projects.$promise.then(function (result) {
       $scope.projects = result;
-      // Trigger refresh complete on the pull to refresh action
-      $scope.$broadcast('scroll.refreshComplete');
+      if (extraCallback !== undefined) {
+        extraCallback();
+      } 
+        
     });
+  };
+  getAllProjects();
+  // Grab all the projects.
+  // $scope.projects = Projects.all();
+  // Set them once we get them.
+  // $scope.projects.$promise.then(function (result) {
+    // $scope.projects = result;
+  // });
+  $scope.refresh = function () {
+    var broadcast = function () {
+      $scope.$broadcast('scroll.refreshComplete');
+    };
+    getAllProjects(broadcast);
   }
   // Projects.api.query(function (response) {
     // $scope.api = response;
@@ -27,9 +38,9 @@ angular.module('starter.controllers', [])
 .controller('ProjectCtrl', function ($scope, $routeParams, Projects) {
   // $scope.project = Projects.get($routeParams.id);
   // $scope.tasks = Projects.getTasks($routeParams.id);
-  $scope.project = Projects.api.get({id:$routeParams.id});
+  $scope.project = Projects.get({id:$routeParams.id});
   $scope.project.$promise.then(function (result) {
-    $scope.project = result[ 0 ];
+    $scope.project = result;
   });
 })
 
